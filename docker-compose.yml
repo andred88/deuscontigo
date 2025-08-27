@@ -11,7 +11,8 @@ services:
       - FLASK_ENV=development
       - SECRET_KEY=supersecretkey
     volumes:
-      - .:/app
+      - ./app_data:/app/data        # Pasta local para dados do app (acompanhamentos, logs, etc.)
+      - ./static:/app/static        # Persistência de arquivos estáticos
     networks:
       - acompanhamento_network
     depends_on:
@@ -25,12 +26,13 @@ services:
       POSTGRES_PASSWORD: senha
       POSTGRES_DB: acompanhamento_db
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data  # Persistência do banco
     networks:
       - acompanhamento_network
 
 volumes:
-  postgres_data:
+  postgres_data:  # Banco de dados persistente
+  app_data:       # Dados do app persistentes
 
 networks:
   acompanhamento_network:
